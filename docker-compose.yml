@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: wellness
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d wellness"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  wellness-resource-service:
+    build:
+      context: ./wellness-resource-service
+    image: wellness-resource-service:1.0.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8081:8081"
