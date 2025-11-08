@@ -8,7 +8,16 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/goal-tracking-service" />
             <option value="$PROJECT_DIR$/wellness-resource-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/goal-tracking-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/goal-tracking-service" />
           </set>
         </option>
       </GradleProjectSettings>

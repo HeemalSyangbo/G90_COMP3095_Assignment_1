@@ -1,0 +1,32 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: goal-tracking-service
+  data:
+    mongodb:
+      # environment-based connection (Docker uses env vars)
+      uri: ${MONGO_URI:mongodb://localhost:27017}
+      database: ${MONGO_DB:goals_db}
+  jackson:
+    default-property-inclusion: non_null
+
+# For inter-service calls (used later in Step 9)
+wellness:
+  resources:
+    base-url: ${WELLNESS_BASE_URL:http://localhost:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
