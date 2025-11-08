@@ -21,7 +21,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")            // REST (MVC)
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")   // MongoDB
 	implementation("org.springframework.boot:spring-boot-starter-validation")     // @Valid, constraints
-
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	// --- WebClient for inter-service calls ---
 	implementation("org.springframework.boot:spring-boot-starter-webflux")        // provides WebClient
 

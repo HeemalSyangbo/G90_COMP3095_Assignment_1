@@ -6,13 +6,15 @@ spring:
     name: goal-tracking-service
   data:
     mongodb:
-      # environment-based connection (Docker uses env vars)
-      uri: ${MONGO_URI:mongodb://localhost:27017}
-      database: ${MONGO_DB:goals_db}
+      # Prefer Spring-style env var if present; otherwise fall back to your MONGO_* pair.
+      # If SPRING_DATA_MONGODB_URI is set, it should include the database in the URI.
+      uri: ${SPRING_DATA_MONGODB_URI:${MONGO_URI:mongodb://localhost:27017}}
+      # If you're using MONGO_DB separately, this will be honored when SPRING_DATA_MONGODB_URI isn't set.
+      database: ${MONGO_DB:goaltracking}
   jackson:
     default-property-inclusion: non_null
 
-# For inter-service calls (used later in Step 9)
+# Inter-service base URL (event/goal -> wellness)
 wellness:
   resources:
     base-url: ${WELLNESS_BASE_URL:http://localhost:8081}
@@ -20,11 +22,17 @@ wellness:
 management:
   endpoints:
     web:
+      base-path: /actuator
       exposure:
         include: health,info
   endpoint:
     health:
+      probes:
+        enabled: true        # adds liveness/readiness subprobes
       show-details: never
+  health:
+    mongo:
+      enabled: true
 
 logging:
   level:
